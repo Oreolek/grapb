@@ -1,0 +1,9 @@
+{
+    "require-dev": {
+        "monolog/monolog": "^1.23"
+    },
+    "require": {
+        "phonetworks/pho-lib-graph": "^6.3",
+        "phpdocumentor/graphviz": "^1.0"
+    }
+}
