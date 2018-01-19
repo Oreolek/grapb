@@ -13,6 +13,7 @@ namespace oreolek\GraphViz\Tests;
 
 use \oreolek\GraphViz\Graph;
 use \Pho\Lib\Graph\Node;
+use \Pho\Lib\Graph\SubGraph;
 
 /**
  * GraphViz export test
@@ -28,22 +29,6 @@ use \Pho\Lib\Graph\Node;
 class GraphTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test that an incorrect graph returns Exception on export.
-     *
-     * @covers ::__toString
-     * @return void
-     */
-    public function testStringException()
-    {
-        $graph = new Graph;
-        $nodea = new Node($graph);
-        $graph->add($nodea);
-
-        $this->setExpectedException('Exception');
-        $graph->__toString();
-    }
-
-    /**
      * Test that the graph returns a DOT graph on toString() method.
      *
      * @covers ::__toString
@@ -52,21 +37,17 @@ class GraphTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $graph = new Graph;
-        $this->assertSame(
-            (string) $graph,
-            ('digraph "My First Graph" {' . PHP_EOL . PHP_EOL . '}')
-        );
+        $nodea = new Node($graph);
+        $nodeb = new Node($graph);
+        $subgraph = new SubGraph($graph);
+        $nodec = new Node($subgraph);
+        $noded = new Node($subgraph);
 
-        $graph->setLabel('PigeonPost');
-        $this->assertSame(
-            (string) $graph,
-            ('digraph "My First Graph" {' . PHP_EOL . 'label="PigeonPost"' . PHP_EOL . '}')
-        );
+        echo $graph;
 
-        $graph->setStrict(true);
         $this->assertSame(
             (string) $graph,
-            ('strict digraph "My First Graph" {' . PHP_EOL . 'label="PigeonPost"' . PHP_EOL . '}')
+            ('graph "'.$graph->id().'" {' . PHP_EOL . '' . PHP_EOL . '}')
         );
     }
 }
